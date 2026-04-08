@@ -39,4 +39,34 @@ Audit log for the forge-benchmark repo itself. The Forge audits everything — i
 
 ---
 
+## [2026-04-09] Tier 1 comparison — Sonnet --medium (blind)
+
+**Purpose:** Blind Tier 1 comparison against Haiku scan. No findings disclosed before run.
+
+**Model:** Sonnet 4.6 `--effort medium`
+**Tool:** agent-janitor v1.0.1
+
+**Results:**
+
+| Metric | Value |
+|---|---|
+| Health Score | 83/100 |
+| Verdict | SUGGEST |
+| BLOCK | 0 |
+| SUGGEST | 2 |
+| NOTE | 1 |
+| Good patterns | 1 |
+| Tokens | 21,937 |
+| Duration | 38 seconds |
+
+**Findings (identical to Haiku):**
+- SUGGEST — Missing tests: `scripts/report.py`
+- SUGGEST — Missing tests: `suites/example/score.py`
+- NOTE — Dead code at `suites/example/score.py:33` — same false positive as Haiku (multi-line dict literal)
+- GOOD — README.md exists
+
+**Tier 1 comparison verdict:** Sonnet and Haiku found **identical findings** on this repo. Health score, verdict, all finding locations, and even the false positive match exactly. Sonnet used fewer tokens (21,937 vs 29,104) but took similar time (38s vs 34s). For objective structural findings, Haiku is the clear winner on cost efficiency with no quality loss.
+
+---
+
 *This page is append-only. Each audit adds a new dated entry.*
