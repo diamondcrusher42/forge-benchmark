@@ -151,7 +151,7 @@ for combo in $MATRIX; do
     source "$HOME/workspace/venv/bin/activate" 2>/dev/null || true
     for task_id in "${TASK_IDS[@]}"; do
         if [[ "$jsonl" != "NOT_FOUND" ]]; then
-            task_score=$(python3 "$SUITE_DIR/score.py" --session "$jsonl" --task "$task_id" 2>/dev/null || echo '{"error":"score failed"}')
+            task_score=$(WORKTREE="$worktree" python3 "$SUITE_DIR/score.py" --session "$jsonl" --task "$task_id" --worktree "$worktree" 2>/dev/null || echo '{"error":"score failed"}')
             scores=$(python3 -c "
 import json, sys
 s = json.loads('$scores')
