@@ -69,4 +69,34 @@ Audit log for the forge-benchmark repo itself. The Forge audits everything — i
 
 ---
 
+## [2026-04-09] Tier 2 test — Opus --max (blind)
+
+**Purpose:** Tier 2 deep scan for semantic comparison against Haiku and Sonnet.
+
+**Model:** Opus 4.6 `--effort max`
+**Tool:** agent-janitor v1.0.1
+
+**Results:**
+
+| Metric | Value |
+|---|---|
+| Health Score | 83/100 |
+| Verdict | SUGGEST |
+| BLOCK | 0 |
+| SUGGEST | 2 |
+| NOTE | 1 (same FP as Haiku/Sonnet) |
+| Good patterns | 1 |
+| Tokens | 20,727 |
+| Duration | 33 seconds |
+
+**Findings (identical to Haiku and Sonnet):**
+- SUGGEST — Missing tests: `scripts/report.py`
+- SUGGEST — Missing tests: `suites/example/score.py`
+- NOTE — Dead code at `suites/example/score.py:33` — same false positive (multi-line dict literal)
+- GOOD — README.md exists
+
+**3-way comparison verdict:** All three models produced **identical findings**. Opus found nothing that Haiku missed. This repo lacks the semantic complexity needed to differentiate tiers (no bare `except: pass`, no type hint violations, no docstring gaps in complex logic). The Tier 2 gap exists — but requires a more complex codebase to surface it.
+
+---
+
 *This page is append-only. Each audit adds a new dated entry.*
