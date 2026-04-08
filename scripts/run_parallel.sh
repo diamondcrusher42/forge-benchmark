@@ -16,7 +16,7 @@ SUITE_DIR="${1:?Usage: run_parallel.sh <suite-dir> [--matrix 'model:effort,...']
 SHIFT_COUNT=1
 
 # Matrix: model-short:effort pairs
-DEFAULT_MATRIX="haiku:medium haiku:max sonnet:medium sonnet:max opus:medium opus:max"
+DEFAULT_MATRIX="opus:medium sonnet:medium haiku:max"
 MATRIX="$DEFAULT_MATRIX"
 
 for arg in "$@"; do
