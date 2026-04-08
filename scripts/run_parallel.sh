@@ -48,8 +48,8 @@ BRANCH="${BENCHMARK_BRANCH:-}"
 
 mkdir -p "$RESULTS_DIR" "$BENCH_WORKDIR"
 
-# Build combined prompt from prompts/*.md (alphabetical)
-PROMPT_FILES=$(ls -1 "$SUITE_DIR/prompts/"*.{md,txt} 2>/dev/null | sort)
+# Build combined prompt from prompts/*.md and *.txt (alphabetical)
+PROMPT_FILES=$(ls -1 "$SUITE_DIR/prompts/"*.md "$SUITE_DIR/prompts/"*.txt 2>/dev/null | sort || true)
 if [[ -z "$PROMPT_FILES" ]]; then
     echo "ERROR: No prompt files found in $SUITE_DIR/prompts/" >&2
     exit 1
@@ -135,7 +135,8 @@ for combo in $MATRIX; do
     echo "✓ $model_short $effort — done"
 
     # Find the JSONL for this worktree
-    escaped=$(echo "$worktree" | sed 's|/|-|g' | sed 's|^-||')
+    # Claude escapes paths by replacing all / with - (leading / becomes leading -)
+    escaped=$(echo "$worktree" | sed 's|/|-|g')
     jsonl=$(ls -t "$HOME/.claude/projects/$escaped/"*.jsonl 2>/dev/null | head -1)
 
     if [[ -z "$jsonl" ]]; then
